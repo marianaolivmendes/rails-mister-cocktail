@@ -18,7 +18,7 @@ Ingredient.destroy_all
 
 puts 'Creating 10 fake cocktails...'
 
-8.times do
+10.times do
   cocktail = Cocktail.new(
     name: Faker::Artist.name
   )
@@ -60,3 +60,4 @@ puts 'Creating 10 fake doses...'
     dose.save!
   end
 end
+puts "Finished!"
