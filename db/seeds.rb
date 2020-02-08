@@ -5,3 +5,48 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
+# primeiro apagar as doses porque e o que tem foreign keys
+Dose.destroy_all
+Cocktail.destroy_all
+Ingredient.destroy_all
+
+Ingredient.create(name: "lemon")
+Ingredient.create(name: "ice")
+Ingredient.create(name: "mint leaves")
+
+puts 'Creating 10 fake ingredients...'
+
+10.times do
+  ingredient = Ingredient.new(
+    name: Faker::Food.ingredient
+  )
+  if ingredient.save
+    # if it can passes all the validations, then it saves it!
+    ingredient.save!
+  end
+end
+
+puts 'Creating 8 fake cocktails...'
+
+8.times do
+  cocktail = Cocktail.new(
+    name: Faker::Artist.name
+  )
+  if cocktail.save
+    cocktail.save!
+  end
+end
+
+puts 'Creating 10 fake doses...'
+
+10.times do
+  dose = Dose.new(
+    description: Faker::Measurement.metric_volume,
+    cocktail: Cocktail.all.sample,
+    ingredient: Ingredient.all.sample
+  )
+  if dose.save
+    dose.save!
+  end
+end

@@ -1,0 +1,15 @@
+<div class="row">
+  <%= link_to new_cocktail_path, class: 'btn btn-primary'  %>
+  <% @cocktails.each do |cocktail| %>
+    <div class="col-lg-3">
+      <div class="card" style="width: 18rem;">
+        <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1649&q=80" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= cocktail.name %></h5>
+          <p><%= cocktail.ingredients.map(&:name).to_sentence %></p>
+          <%= link_to "Recipe", cocktail_path(cocktail), class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

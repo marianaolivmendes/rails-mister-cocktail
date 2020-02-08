@@ -1,0 +1,21 @@
+<div class="card-category mb-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1649&q=80)">
+  <%= @cocktail.name %>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <h3>Description</h3>
+    <p>Amazing cocktail!</p>
+  </div>
+
+  <div class="col-lg-6">
+    <h3>Ingredients</h3>
+    <ul>
+      <% @cocktail.doses.each do |dose| %>
+        <li><%= dose.ingredient.name %> - <%= dose.description %> <%= link_to "(delete)", dose_path(dose), method: :delete %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+
