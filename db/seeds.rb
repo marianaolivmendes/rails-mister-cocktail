@@ -32,7 +32,10 @@ response = RestClient.get(Ingredient::API_URL)
 json = JSON.parse(response.body, symbolize_names: true)
 
 json[:drinks].each do |drink|
-  Ingredient.create!(name: drink[:strIngredient1])
+  ingredient = Ingredient.new(name: drink[:strIngredient1])
+  if ingredient.save
+    ingredient.save!
+  end
   puts drink[:strIngredient1]
 end
 
