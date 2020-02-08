@@ -51,16 +51,17 @@ end
 #   end
 # end
 
-puts 'Creating 10 fake doses...'
+puts 'Creating doses...'
 
-10.times do
-  dose = Dose.new(
-    description: Faker::Measurement.metric_volume,
-    cocktail: Cocktail.all.sample,
-    ingredient: Ingredient.all.sample
-  )
-  if dose.save
-    dose.save!
+  Cocktail.all.each do |cocktail|
+    dose = Dose.new(
+      description: Faker::Measurement.metric_volume,
+      cocktail: cocktail,
+      ingredient: Ingredient.all.sample
+    )
+    if dose.save
+      dose.save!
+    end
   end
-end
+
 puts "Finished!"
