@@ -2,7 +2,7 @@
   <% @cocktails.each do |cocktail| %>
     <div class="col-lg-3">
       <div class="card" style="width: 18rem;">
-        <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1649&q=80" class="card-img-top" alt="...">
+        <%= cl_image_tag(cocktail.photo.key)  %>
         <div class="card-body">
           <h5 class="card-title"><%= cocktail.name %></h5>
           <p><%= cocktail.ingredients.map(&:name).to_sentence %></p>

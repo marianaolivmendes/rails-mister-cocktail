@@ -8,24 +8,26 @@
 # require 'faker'
 # primeiro apagar as doses porque e o que tem foreign keys
 
-Dose.destroy_all
-Cocktail.destroy_all
-Ingredient.destroy_all
-
 # Ingredient.create(name: "lemon")
 # Ingredient.create(name: "ice")
 # Ingredient.create(name: "mint leaves")
 
-puts 'Creating 10 fake cocktails...'
+if Rails.env.development?
+  Dose.destroy_all
+  Cocktail.destroy_all
+  puts 'Creating 10 fake cocktails...'
 
-10.times do
-  cocktail = Cocktail.new(
-    name: Faker::Artist.name
-  )
-  if cocktail.save
+  10.times do |index|
+    puts "Creating cocktail #{index}..."
+    image_url = Faker::LoremFlickr.image(size: "500x500", search_terms: ['cocktails'])
+    file = URI.open(image_url)
+    cocktail = Cocktail.new(name: Faker::Artist.unique.name)
+    cocktail.photo.attach(io: file, filename: 'file.png', content_type: 'image/png')
     cocktail.save!
   end
 end
+
+Ingredient.destroy_all
 
 response = RestClient.get(Ingredient::API_URL)
 
@@ -33,9 +35,8 @@ json = JSON.parse(response.body, symbolize_names: true)
 
 json[:drinks].each do |drink|
   ingredient = Ingredient.new(name: drink[:strIngredient1])
-  if ingredient.save
-    ingredient.save!
-  end
+  ingredient.save!
+
   puts drink[:strIngredient1]
 end
 
@@ -59,9 +60,8 @@ puts 'Creating doses...'
       cocktail: cocktail,
       ingredient: Ingredient.all.sample
     )
-    if dose.save
-      dose.save!
-    end
+
+    dose.save!
   end
 
 puts "Finished!"
